@@ -156,3 +156,4 @@ let g:eighties_compute = 1 " Disable this if you just want the minimum + extra
 
 " taskwarrior
 let g:task_rc_override = 'rc.defaultwidth=0'
+
