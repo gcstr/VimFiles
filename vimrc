@@ -18,7 +18,6 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-rails'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'scrooloose/nerdtree'
-Plugin 'wookiehangover/jshint.vim'
 Plugin 'mattn/emmet-vim'
 Plugin 'taylor/vim-zoomwin'
 Plugin 'whatyouhide/vim-gotham'
@@ -30,7 +29,8 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'justincampbell/vim-eighties'
 Plugin 'farseer90718/vim-taskwarrior'
-
+Plugin 'morhetz/gruvbox'
+Plugin 'terryma/vim-multiple-cursors'
 
 " syntax
 Plugin 'kchmck/vim-coffee-script'
@@ -38,7 +38,9 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'tpope/vim-haml'
 Plugin 'groenewege/vim-less'
 Plugin 'hail2u/vim-css3-syntax'
-Plugin 'ap/vim-css-color'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'mxw/vim-jsx'
+Plugin 'rust-lang/rust.vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -97,7 +99,7 @@ set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 let g:hybrid_use_iTerm_colors = 1
 " colorscheme hybrid
 " let g:airline_theme='gotham'
-colorscheme flattown
+colorscheme gruvbox
 
 " gitgutter
 highlight clear SignColumn
@@ -157,3 +159,10 @@ let g:eighties_compute = 1 " Disable this if you just want the minimum + extra
 " taskwarrior
 let g:task_rc_override = 'rc.defaultwidth=0'
 
+" Emmet.vim
+"let g:user_emmet_install_global = 0
+"autocmd FileType html,css,erb EmmetInstall
+"let g:user_emmet_mode='a'
+
+" performance 7.4
+set regexpengine=1
