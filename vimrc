@@ -31,6 +31,7 @@ Plugin 'justincampbell/vim-eighties'
 Plugin 'farseer90718/vim-taskwarrior'
 Plugin 'morhetz/gruvbox'
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'Shougo/unite.vim'
 
 " syntax
 Plugin 'kchmck/vim-coffee-script'
@@ -95,6 +96,10 @@ set number
 " status line
 set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 
+"ctrlp
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+
 " colorscheme
 colorscheme gruvbox
 let g:hybrid_use_iTerm_colors = 1
@@ -123,12 +128,14 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 map <F2> :NERDTreeToggle<CR>
+map <C-b> :Unite buffer<CR>
+map <leader>q :bd<CR>
+nnoremap <C-t> :Unite file_rec/async<cr>
 nnoremap <leader><space> :noh<cr>
 nnoremap <leader>a :Ack<space>
 nnoremap <leader>w <C-w><C-v>
 nnoremap Q <nop>
 nmap <C-c>r <Plug>SetTmuxVars
-imap <c-l> <space>=><space>
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
@@ -142,7 +149,6 @@ let g:airline_powerline_fonts = 1
 if has("gui_macvim")
   set shell=/bin/bash\ -l
   set fullscreen
-  autocmd VimEnter * NERDTree | wincmd p
 endif
 
 " EasyMotion Stuff
