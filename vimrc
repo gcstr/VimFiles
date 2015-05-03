@@ -52,7 +52,7 @@ set encoding=utf-8
 set scrolloff=3
 set showcmd
 set wildmenu
-set wildmode=list:longest,full
+set wildmode=longest:list,full
 set wildignore=*.o,*.obj,*.swp,*~,#*#
 set cursorline
 set linespace=1
@@ -96,10 +96,9 @@ set number
 set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 
 " colorscheme
-let g:hybrid_use_iTerm_colors = 1
-" colorscheme hybrid
-" let g:airline_theme='gotham'
 colorscheme gruvbox
+let g:hybrid_use_iTerm_colors = 1
+let g:airline_theme='hybrid'
 
 " gitgutter
 highlight clear SignColumn
@@ -141,7 +140,9 @@ let g:airline_powerline_fonts = 1
 " FIX: PluginUpdate => git pull: git-sh-setup: No such file or directory in MacVim (OK in non-GUI version of Vim)
 " https://github.com/gmarik/Vundle.vim/issues/510
 if has("gui_macvim")
-    set shell=/bin/bash\ -l
+  set shell=/bin/bash\ -l
+  set fullscreen
+  autocmd VimEnter * NERDTree | wincmd p
 endif
 
 " EasyMotion Stuff
