@@ -31,7 +31,7 @@ Plugin 'justincampbell/vim-eighties'
 Plugin 'farseer90718/vim-taskwarrior'
 Plugin 'morhetz/gruvbox'
 Plugin 'terryma/vim-multiple-cursors'
-Plugin 'Shougo/unite.vim'
+Plugin 'jlanzarotta/bufexplorer'
 
 " syntax
 Plugin 'kchmck/vim-coffee-script'
@@ -128,9 +128,8 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 map <F2> :NERDTreeToggle<CR>
-map <C-b> :Unite buffer<CR>
+map <C-b> <leader>bt
 map <leader>q :bd<CR>
-nnoremap <C-t> :Unite file_rec/async<cr>
 nnoremap <leader><space> :noh<cr>
 nnoremap <leader>a :Ack<space>
 nnoremap <leader>w <C-w><C-v>
