@@ -9,14 +9,12 @@ call vundle#begin()
 Plugin 'gmarik/vundle'
 
 " bundles
-" github
 Plugin 'kien/ctrlp.vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'thoughtbot/vim-rspec'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-rails'
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'scrooloose/nerdtree'
 Plugin 'mattn/emmet-vim'
 Plugin 'taylor/vim-zoomwin'
@@ -32,6 +30,7 @@ Plugin 'farseer90718/vim-taskwarrior'
 Plugin 'morhetz/gruvbox'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'jlanzarotta/bufexplorer'
+Plugin 'rking/ag.vim'
 
 " syntax
 Plugin 'kchmck/vim-coffee-script'
@@ -75,6 +74,8 @@ set shell=zsh
 syntax on
 "autocmd CursorHold * checktime " hack for autoread
 
+let mapleader=","
+
 " terminal colors
 set t_Co=256
 
@@ -96,6 +97,9 @@ set number
 " status line
 set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 
+" bufferline
+" let g:bufferline_rotate = 1
+
 "ctrlp
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
@@ -103,7 +107,7 @@ let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 " colorscheme
 colorscheme gruvbox
 let g:hybrid_use_iTerm_colors = 1
-let g:airline_theme='hybrid'
+let g:airline_theme='wombat'
 
 " gitgutter
 highlight clear SignColumn
@@ -134,10 +138,11 @@ nnoremap <leader><space> :noh<cr>
 nnoremap <leader>a :Ack<space>
 nnoremap <leader>w <C-w><C-v>
 nnoremap Q <nop>
-nmap <C-c>r <Plug>SetTmuxVars
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
+nnoremap <leader>w <C-w><C-v>
+map <leader><leader> :CtrlP<cr>
 
 "set guifont=Menlo:h12
 set guifont=Meslo_LG_S_for_Powerline:h12
@@ -172,3 +177,45 @@ let g:task_rc_override = 'rc.defaultwidth=0'
 
 " performance 7.4
 set regexpengine=1
+
+" Fenak funcs
+function! RenameFile()
+    let old_name = expand('%')
+    let new_name = input('New file name: ', expand('%'), 'file')
+    if new_name != '' && new_name != old_name
+        exec ':saveas ' . new_name
+        exec ':silent !rm ' . old_name
+        redraw!
+    endif
+endfunction
+map <leader>n :call RenameFile()<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" SWITCH BETWEEN TEST AND PRODUCTION CODE
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! OpenTestAlternate()
+  let new_file = AlternateForCurrentFile()
+  exec ':e ' . new_file
+endfunction
+function! AlternateForCurrentFile()
+  let current_file = expand("%")
+  let new_file = current_file
+  let in_spec = match(current_file, '^spec/') != -1
+  let going_to_spec = !in_spec
+  let in_app = match(current_file, '\<controllers\>') != -1 || match(current_file, '\<models\>') != -1 || match(current_file, '\<views\>') != -1 || match(current_file, '\<helpers\>') != -1
+  if going_to_spec
+    if in_app
+      let new_file = substitute(new_file, '^app/', '', '')
+    end
+    let new_file = substitute(new_file, '\.e\?rb$', '_spec.rb', '')
+    let new_file = 'spec/' . new_file
+  else
+    let new_file = substitute(new_file, '_spec\.rb$', '.rb', '')
+    let new_file = substitute(new_file, '^spec/', '', '')
+    if in_app
+      let new_file = 'app/' . new_file
+    end
+  endif
+  return new_file
+endfunction
+nnoremap <leader>. :call OpenTestAlternate()<cr>
