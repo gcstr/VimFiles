@@ -6,7 +6,7 @@ call vundle#begin()
 
 " let Vundle manage Vundle
 " required!
-Plugin 'gmarik/vundle'
+Plugin 'VundleVim/Vundle.vim'
 
 " bundles
 Plugin 'kien/ctrlp.vim'
@@ -21,10 +21,10 @@ Plugin 'taylor/vim-zoomwin'
 Plugin 'whatyouhide/vim-gotham'
 Plugin 'bling/vim-airline'
 Plugin 'slim-template/vim-slim.git'
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'ervandew/supertab'
+Plugin 'Shougo/neocomplete.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'Lokaltog/vim-easymotion'
 Plugin 'justincampbell/vim-eighties'
 Plugin 'farseer90718/vim-taskwarrior'
 Plugin 'morhetz/gruvbox'
@@ -41,6 +41,13 @@ Plugin 'hail2u/vim-css3-syntax'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'mxw/vim-jsx'
 Plugin 'rust-lang/rust.vim'
+Plugin 'mustache/vim-mustache-handlebars'
+
+" colorscheme
+Plugin 'chriskempson/base16-vim'
+
+autocmd BufNewFile,BufRead *.json set ft=javascript
+autocmd BufNewFile,BufRead *.mst set ft=mustache
 
 call vundle#end()
 filetype plugin indent on
@@ -55,7 +62,7 @@ set wildmenu
 set wildmode=longest:list,full
 set wildignore=*.o,*.obj,*.swp,*~,#*#
 set cursorline
-set linespace=1
+set linespace=-2
 set ignorecase
 set smartcase
 set incsearch
@@ -97,9 +104,6 @@ set number
 " status line
 set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 
-" bufferline
-" let g:bufferline_rotate = 1
-
 "ctrlp
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
@@ -120,9 +124,25 @@ highlight GitGutterChangeDelete guifg=darkyellow
 let g:rubycomplete_buffer_loading = 1
 let g:rubycomplete_rails = 1
 
+" neocomplete
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+let g:neocomplete#enable_auto_select = 1
+
+
 " for ruby, autoindent with two spaces, always expand tabs
 autocmd FileType ruby,yaml,cucumber set ai sw=2 sts=2 et
 autocmd FileType python set sw=4 sts=4 et
+
+  autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+  if !exists('g:neocomplete#force_omni_input_patterns')
+    let g:neocomplete#force_omni_input_patterns = {}
+  endif
+  let g:neocomplete#force_omni_input_patterns.ruby =
+  \ '[^. *\t]\.\w*\|\h\w*::'
 
 " mappings
 nnoremap <C-J> <C-w>j<C-w>_
@@ -145,7 +165,7 @@ nnoremap <leader>w <C-w><C-v>
 map <leader><leader> :CtrlP<cr>
 
 "set guifont=Menlo:h12
-set guifont=Meslo_LG_S_for_Powerline:h12
+set guifont=Hack:h12
 let g:airline_powerline_fonts = 1
 
 " FIX: PluginUpdate => git pull: git-sh-setup: No such file or directory in MacVim (OK in non-GUI version of Vim)
@@ -154,12 +174,6 @@ if has("gui_macvim")
   set shell=/bin/bash\ -l
   set fullscreen
 endif
-
-" EasyMotion Stuff
-map  / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
-map  n <Plug>(easymotion-next)
-map  N <Plug>(easymotion-prev)
 
 " Eighties Stuff
 let g:eighties_enabled = 1
