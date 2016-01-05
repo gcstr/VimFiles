@@ -42,6 +42,7 @@ Plugin 'vim-ruby/vim-ruby'
 Plugin 'mxw/vim-jsx'
 Plugin 'rust-lang/rust.vim'
 Plugin 'mustache/vim-mustache-handlebars'
+Plugin 'digitaltoad/vim-jade'
 
 " colorscheme
 Plugin 'chriskempson/base16-vim'
@@ -62,7 +63,6 @@ set wildmenu
 set wildmode=longest:list,full
 set wildignore=*.o,*.obj,*.swp,*~,#*#
 set cursorline
-set linespace=-2
 set ignorecase
 set smartcase
 set incsearch
@@ -72,7 +72,6 @@ set nowrap
 set expandtab
 set tabstop=2
 set shiftwidth=2
-set paste
 set autoread
 set laststatus=2
 set backupdir=/tmp
@@ -107,11 +106,12 @@ set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 "ctrlp
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+map <C-m> :CtrlPMRU<CR>
 
 " colorscheme
-colorscheme gruvbox
+colorscheme hybrid
 let g:hybrid_use_iTerm_colors = 1
-let g:airline_theme='wombat'
+let g:airline_theme='molokai'
 
 " gitgutter
 highlight clear SignColumn
@@ -178,8 +178,9 @@ nnoremap <S-Tab> :bprevious<CR>
 nnoremap <leader>w <C-w><C-v>
 map <leader><leader> :CtrlP<cr>
 
-"set guifont=Menlo:h12
 set guifont=Hack:h12
+"set guifont=Fira\ Code\ Retina:h12
+set linespace=-2
 let g:airline_powerline_fonts = 1
 
 " FIX: PluginUpdate => git pull: git-sh-setup: No such file or directory in MacVim (OK in non-GUI version of Vim)
