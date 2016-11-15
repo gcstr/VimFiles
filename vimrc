@@ -10,10 +10,8 @@ Plugin 'VundleVim/Vundle.vim'
 
 " bundles
 Plugin 'kien/ctrlp.vim'
-Plugin 'mileszs/ack.vim'
 Plugin 'thoughtbot/vim-rspec'
 Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-rails'
 Plugin 'scrooloose/nerdtree'
 Plugin 'mattn/emmet-vim'
@@ -25,14 +23,22 @@ Plugin 'slim-template/vim-slim.git'
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'justincampbell/vim-eighties'
 Plugin 'farseer90718/vim-taskwarrior'
 Plugin 'morhetz/gruvbox'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'rking/ag.vim'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'StanAngeloff/php.vim'
+Plugin 'Konfekt/FastFold'
+Plugin 'Konfekt/FoldText'
+
+if !&diff
+  Plugin 'justincampbell/vim-eighties'
+endif
 
 " syntax
+Plugin 'vim-syntastic/syntastic'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'pangloss/vim-javascript'
 Plugin 'tpope/vim-haml'
@@ -47,6 +53,7 @@ Plugin 'digitaltoad/vim-jade'
 " colorscheme
 Plugin 'chriskempson/base16-vim'
 
+
 autocmd BufNewFile,BufRead *.json set ft=javascript
 autocmd BufNewFile,BufRead *.mst set ft=mustache
 
@@ -60,9 +67,11 @@ set encoding=utf-8
 set scrolloff=3
 set showcmd
 set wildmenu
-set wildmode=longest:list,full
+set wildmode=longest,list,full
 set wildignore=*.o,*.obj,*.swp,*~,#*#
 set cursorline
+set foldmethod=syntax
+set nofoldenable
 set ignorecase
 set smartcase
 set incsearch
@@ -76,7 +85,9 @@ set autoread
 set laststatus=2
 set backupdir=/tmp
 set directory=/tmp
-set shell=zsh
+set shell=fish
+"set shell=/bin/bash
+
 syntax on
 "autocmd CursorHold * checktime " hack for autoread
 
@@ -93,7 +104,7 @@ set list
 set listchars=tab:\ ¬,trail:.
 
 " interface
-set background=dark
+" set background=dark
 set go-=T
 set go-=L
 set go-=r
@@ -111,7 +122,7 @@ map <C-m> :CtrlPMRU<CR>
 " colorscheme
 colorscheme hybrid
 let g:hybrid_use_iTerm_colors = 1
-let g:airline_theme='molokai'
+let g:airline_theme='base16_monokai'
 
 " gitgutter
 highlight clear SignColumn
@@ -158,6 +169,7 @@ let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
 autocmd FileType ruby,yaml,cucumber set ai sw=2 sts=2 et
 autocmd FileType python set sw=4 sts=4 et
 
+
 " mappings
 nnoremap <C-J> <C-w>j<C-w>_
 nnoremap <C-K> <C-w>k<C-w>_
@@ -178,16 +190,18 @@ nnoremap <S-Tab> :bprevious<CR>
 nnoremap <leader>w <C-w><C-v>
 map <leader><leader> :CtrlP<cr>
 
-set guifont=Hack:h12
-"set guifont=Fira\ Code\ Retina:h12
-set linespace=-2
+"set guifont=Hack:h11
+set guifont=Fira\ Code\ Retina:h12
+set linespace=0
 let g:airline_powerline_fonts = 1
 
 " FIX: PluginUpdate => git pull: git-sh-setup: No such file or directory in MacVim (OK in non-GUI version of Vim)
 " https://github.com/gmarik/Vundle.vim/issues/510
 if has("gui_macvim")
-  set shell=/bin/bash\ -l
-  set fullscreen
+  colorscheme base16-darktooth
+  set macligatures
+  set shell=/usr/local/bin/fish
+  "set shell=/bin/bash\ -l
 endif
 
 " Eighties Stuff
